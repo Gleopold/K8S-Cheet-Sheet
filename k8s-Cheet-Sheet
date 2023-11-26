@@ -1,5 +1,66 @@
-kubectl version:
+Inspect Cluster Resources
+kubectl get nodes -o wide
+- Show all nodes with detailed information.
+kubectl describe node <node-name>
+- Get detailed information about a node.
+kubectl get pods --all-namespaces
+- List all pods in all namespaces.
 
+Check Pod Status and Logs
+kubectl describe pod <pod-name> -n <namespace>: Get detailed information about a pod.
+kubectl logs <pod-name> -n <namespace>: Get logs for a pod.
+kubectl logs <pod-name> -n <namespace> -c <container-name>: Get logs for a specific container in a pod.
+kubectl logs --previous <pod-name> -n <namespace>: Get logs from a pod that has crashed.
+
+Performance and Health Checks
+kubectl top nodes: Display resource (CPU/memory) usage of nodes.
+kubectl top pod <pod-name> -n <namespace>: Display resource usage of a pod.
+kubectl exec <pod-name> -n <namespace> -- <command>: Execute a command in a container.
+
+Interact with the Control Plane
+kubectl cluster-info: Display addresses of the master and services.
+kubectl get componentstatuses: Check the health of the cluster's core components.
+
+Networking Issues
+kubectl get svc: List all services to check ClusterIPs and their endpoints.
+kubectl get ep: List all endpoints, which can be useful to check if your services have endpoints associated with them.
+kubectl exec <pod-name> -n <namespace> -- nslookup <service-name>: DNS lookup inside a pod to check DNS resolution.
+
+Resource and Configuration Analysis
+kubectl get events -n <namespace>: List events in a namespace to see errors and warnings.
+kubectl get deployment <deployment-name> -o yaml: Get the YAML configuration of a deployment.
+kubectl get configmap -n <namespace>: List all configmaps used for configuration.
+kubectl get secrets -n <namespace>: List all secrets (note: contents will be obfuscated).
+
+Advanced Pod Troubleshooting
+kubectl debug <pod-name> -n <namespace> --image=<debug-image> -- <command>: Start a debugging session on a pod (Kubernetes 1.18+).
+kubectl attach <pod-name> -n <namespace> -c <container>: Attach to a running container for stdin, stdout and stderr.
+Accessing the API Server Directly
+kubectl proxy: Start a proxy to the Kubernetes API server.
+curl http://localhost:8001/api/v1/namespaces/default/pods/<pod-name>/proxy/: Access a pod directly through the API proxy.
+
+Network Policies and Security
+kubectl get networkpolicies -n <namespace>: List all network policies.
+kubectl describe networkpolicy <name> -n <namespace>: Get detailed information about a network policy.
+
+Work with Kubernetes Internals
+kubectl get csr: Get all certificate signing requests (useful for troubleshooting TLS and certificate issues).
+kubectl auth can-i <verb> <resource>: Check if your user can perform a specific action.
+
+Some resources:
+https://github.com/wuestkamp/cka-example-environments
+https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/
+https://kubernetes.io/docs/home/
+- Everything lol
+
+
+Notes:
+- ECS is a rival of Kubernetees
+- Controller Manager - deamon that collects information about clusters, and sends them to the server
+- Scheduler - workload utilization (primitive loadbalancing)
+
+
+kubectl version:
 Usage: Check the client and server Kubernetes API versions.
 Description: This command displays the version of the kubectl client and the Kubernetes cluster's server version. It helps ensure compatibility between the client and server components.
 kubectl cluster-info:
@@ -48,7 +109,7 @@ Usage: View the rollout history of a Deployment.
 Description: Check the history of updates and rollbacks for a Deployment, including revision numbers and status.
 
 
-Advanced Kubernetes (K8s) commands are typically used by experienced administrators and developers to manage and troubleshoot Kubernetes clusters. Here are some advanced K8s commands:
+Bit more advanced K8s commands:
 
 1. **kubectl apply**: While not necessarily advanced, `kubectl apply` is a powerful command for deploying or updating resources defined in Kubernetes manifest files. It can create or update resources like pods, services, and deployments based on changes in the manifest files.
    kubectl apply -f my-deployment.yaml
@@ -67,23 +128,17 @@ Advanced Kubernetes (K8s) commands are typically used by experienced administrat
    
 6. **kubectl proxy**: The `kubectl proxy` command starts a proxy server that allows you to access the Kubernetes API locally. This is often used for debugging or to access the Kubernetes Dashboard.
    kubectl proxy
-   
 
 7. **kubectl edit**: `kubectl edit` lets you edit a resource directly from the command line. It opens the resource in your default editor and applies the changes when you save and exit.
    kubectl edit deployment my-deployment
    
 8. **kubectl top**: This command provides resource usage metrics for nodes and pods. It's useful for monitoring and diagnosing performance issues.
    kubectl top node
-   Example (Pod):
    kubectl top pod my-pod-name
    
-
 9. **kubectl rollout**: Kubernetes has built-in support for rolling updates. You can use `kubectl rollout` commands to manage deployments and rollbacks.
    kubectl rollout status deployment/my-deployment
 
 10. **kubectl auth can-i**: This command checks if the current user has permission to perform a specific action on a resource. It's handy for understanding RBAC (Role-Based Access Control) settings.
-
-    Example:
-    shell
     kubectl auth can-i create pod --as <username>
 
