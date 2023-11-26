@@ -51,80 +51,39 @@ Description: Check the history of updates and rollbacks for a Deployment, includ
 Advanced Kubernetes (K8s) commands are typically used by experienced administrators and developers to manage and troubleshoot Kubernetes clusters. Here are some advanced K8s commands:
 
 1. **kubectl apply**: While not necessarily advanced, `kubectl apply` is a powerful command for deploying or updating resources defined in Kubernetes manifest files. It can create or update resources like pods, services, and deployments based on changes in the manifest files.
-
-   Example:
-   ```shell
    kubectl apply -f my-deployment.yaml
-   ```
-
+   
 2. **kubectl describe**: This command provides detailed information about a Kubernetes resource. It's invaluable for troubleshooting issues and understanding the current state of resources.
-
-   Example:
-   ```shell
    kubectl describe pod my-pod-name
-   ```
-
+   
 3. **kubectl logs**: Use `kubectl logs` to fetch the logs from a specific container within a pod. It's helpful for debugging and monitoring containerized applications.
-
-   Example:
-   ```shell
    kubectl logs my-pod-name -c my-container-name
-   ```
 
 4. **kubectl exec**: This command allows you to execute commands inside a running container in a pod. It's useful for debugging and performing ad-hoc tasks.
-
-   Example:
-   ```shell
    kubectl exec -it my-pod-name -- /bin/sh
-   ```
 
 5. **kubectl port-forward**: Use `kubectl port-forward` to forward a local port to a port on a specific pod. This can be handy for accessing services running inside pods for debugging or testing purposes.
-
-   Example:
-   ```shell
    kubectl port-forward my-pod-name 8080:80
-   ```
-
+   
 6. **kubectl proxy**: The `kubectl proxy` command starts a proxy server that allows you to access the Kubernetes API locally. This is often used for debugging or to access the Kubernetes Dashboard.
-
-   Example:
-   ```shell
    kubectl proxy
-   ```
+   
 
 7. **kubectl edit**: `kubectl edit` lets you edit a resource directly from the command line. It opens the resource in your default editor and applies the changes when you save and exit.
-
-   Example:
-   ```shell
    kubectl edit deployment my-deployment
-   ```
-
+   
 8. **kubectl top**: This command provides resource usage metrics for nodes and pods. It's useful for monitoring and diagnosing performance issues.
-
-   Example (Node):
-   ```shell
    kubectl top node
-   ```
-
    Example (Pod):
-   ```shell
    kubectl top pod my-pod-name
-   ```
+   
 
 9. **kubectl rollout**: Kubernetes has built-in support for rolling updates. You can use `kubectl rollout` commands to manage deployments and rollbacks.
-
-   Example (Rollout status):
-   ```shell
    kubectl rollout status deployment/my-deployment
-   ```
 
 10. **kubectl auth can-i**: This command checks if the current user has permission to perform a specific action on a resource. It's handy for understanding RBAC (Role-Based Access Control) settings.
 
     Example:
-    ```shell
+    shell
     kubectl auth can-i create pod --as <username>
-    ```
-
-These advanced Kubernetes commands are just a starting point. Kubernetes offers a wide range of capabilities, and mastering these commands will help you manage and troubleshoot your clusters effectively. Always exercise caution and thoroughly understand the impact of the commands you run in a production environment.
-
 
